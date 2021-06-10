@@ -1,8 +1,8 @@
 env:
     CIRRUS_CLONE_DEPTH: 1
     BUILD_HOSTNAME: "cirrus-ci.org"
-    bot_api: "ENCRYPTED[b16032643ad0994cda4822c9d477956f434278d0f786f8e131b585aa4f8510a11f3cd9f6a66a63568d2cba1c4dde25b4]"
-
+    bot_api: "ENCRYPTED[64592566f940a4181aa5a5af2d948181e23832cd3597e80497ddb49731268d212ff057490cfb3a4aeaa16cac304da683]"
+    rclone_config: "ENCRYPTED[b78458176ba3c86e3ad06b0c058583dd1a4ebc6ed44fe04ea95a6569ca677418abcefeebc4169990106d492ba77c64a0]"
 
 task:
   name: Test
@@ -20,7 +20,7 @@ task:
   notify_script:
     - rom_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh -m 1 | cut -d / -f 4)
     - device=$(grep unch $CIRRUS_WORKING_DIR/build_rom.sh -m 1 | cut -d ' ' -f 2 | cut -d _ -f 2 | cut -d - -f 1)
-    - your_telegram_id=@ROM_builders_junk
+    - your_telegram_id=@KernelPanic_OpenSource_CI
     - show=$(cat $CIRRUS_WORKING_DIR/build_rom.sh)
     - curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" -d "text=<code>$device-$rom_name</code> Started
       
@@ -29,7 +29,7 @@ task:
       $show" -d "chat_id=${your_telegram_id}" -d "parse_mode=HTML"
   test_script:
     - set -e
-    - curl -Ls https://github.com/ROM-builders/temporary/raw/main/test.sh | bash
+    - curl -Ls https://github.com/KernelPanic-OpenSource/temporary/raw/main/test.sh | bash
 
 task:
   name: Build
@@ -83,7 +83,6 @@ task:
     - set -exv
     - rom_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh -m 1 | cut -d / -f 4)
     - device=$(grep unch $CIRRUS_WORKING_DIR/build_rom.sh -m 1 | cut -d ' ' -f 2 | cut -d _ -f 2 | cut -d - -f 1)
-
     - export CCACHE_DIR=~/ccache/$rom_name/$device
     - ccache -s
 
@@ -126,7 +125,7 @@ task:
     - set -e
     - rom_name=$(grep init $CIRRUS_WORKING_DIR/build_rom.sh -m 1 | cut -d / -f 4)
     - device=$(grep unch $CIRRUS_WORKING_DIR/build_rom.sh -m 1 | cut -d ' ' -f 2 | cut -d _ -f 2 | cut -d - -f 1)
-    - your_telegram_id=@ROM_builders_channel
+    - your_telegram_id=@KernelPanic_OpenSource_CI
     - curl -s "https://api.telegram.org/bot${bot_api}/sendmessage" -d "text=<code>$device-$rom_name</code> Succeed
       
       https://cirrus-ci.com/build/$CIRRUS_BUILD_ID" -d "chat_id=${your_telegram_id}" -d "parse_mode=HTML"
