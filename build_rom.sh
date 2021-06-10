@@ -1,13 +1,7 @@
 # sync rom
 repo init --depth=1 --no-repo-verify -u https://github.com/LineageOS/android.git -b lineage-18.1 -g default,-device,-mips,-darwin,-notdefault
+git clone https://github.com/KernelPanic-OpenSource/local_manifest.git --depth 1 -b main .repo/local_manifests
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
-
-# Git device tree
-git clone -b lineage-18.1 --single-branch https://github.com/LineageOS/android_device_xiaomi_whyred device/xiaomi/whyred
-git clone -b lineage-18.1 --single-branch https://github.com/LineageOS/android_kernel_xiaomi_sdm660.git kernel/xiaomi/sdm660
-git clone -b lineage-18.1 --single-branch https://github.com/LineageOS/android_device_xiaomi_sdm660-common.git device/xiaomi/sdm660-common
-git clone -b omni-11 --single-branch https://github.com/KernelPanic-OpenSource/android_vendor_xiaomi_whyred.git vendor/xiaomi/whyred
-git clone -b omni-11 --single-branch https://github.com/KernelPanic-OpenSource/android_vendor_xiaomi_sdm660-common.git vendor/xiaomi/sdm660-common
 
 # build rom
 source build/envsetup.sh
